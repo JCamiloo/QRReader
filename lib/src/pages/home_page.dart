@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qrreader/src/pages/adresses_page.dart';
 import 'package:qrreader/src/pages/maps_page.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -15,9 +16,20 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('QR Scanner'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete_forever),
+            onPressed: () {},
+          ),
+          
+        ],
+      ),
       body: _callPage(currentIndex),
       bottomNavigationBar: _createBottomNavigationBar(),
-      floatingActionButton: _createFloatingActionButton(),
+      floatingActionButton: _createFloatingActionButton(context),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
@@ -51,10 +63,24 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _createFloatingActionButton() {
+  Widget _createFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       child: Icon(Icons.filter_center_focus),
-      onPressed: () {},
+      onPressed: _scanQR,
+      backgroundColor: Theme.of(context).primaryColor
     );
+  }
+
+  _scanQR() async {
+    // https://pub.dev/packages/barcode_scan/versions
+    // geo:40.62737197776518,-73.92354383906253
+    String result = '';
+    try {
+      result = await BarcodeScanner.scan();
+      print(result);
+    } catch(e) {
+      result = e.toString();
+      print(result);
+    }
   }
 }
