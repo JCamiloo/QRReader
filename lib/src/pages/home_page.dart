@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:qrreader/src/pages/adresses_page.dart';
 import 'package:qrreader/src/pages/maps_page.dart';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:qrreader/src/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -74,13 +75,18 @@ class _HomePageState extends State<HomePage> {
   _scanQR() async {
     // https://pub.dev/packages/barcode_scan/versions
     // geo:40.62737197776518,-73.92354383906253
-    String result = '';
-    try {
-      result = await BarcodeScanner.scan();
-      print(result);
-    } catch(e) {
-      result = e.toString();
-      print(result);
+    String result = 'https://pub.dev/packages/barcode_scan/versions';
+    // try {
+    //   result = await BarcodeScanner.scan();
+    //   print(result);
+    // } catch(e) {
+    //   result = e.toString();
+    //   print(result);
+    // }
+
+    if (result != null) {
+      final scan = Scan(value: result);
+      DBProvider.db.newScan(scan);
     }
   }
 }

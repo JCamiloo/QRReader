@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:qrreader/src/models/scan_model.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:qrreader/src/models/scan_model.dart';
+export 'package:qrreader/src/models/scan_model.dart';
 
 class DBProvider {
   static Database _database;
@@ -11,7 +12,7 @@ class DBProvider {
   DBProvider._();
 
   Future<Database>get database async {
-    if (_database != null) return database;
+    if (_database != null) return _database;
     _database = await initDB();
     return _database;
   }
