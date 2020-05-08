@@ -36,13 +36,12 @@ class DBProvider {
     );
   }
 
-  newScanRow(Scan newScan) async {
+  newScanRaw(Scan newScan) async {
     final db = await database;
-    final res = await db.rawInsert(
+    return await db.rawInsert(
       "INSERT Into Scans (id, type, value) "
       "VALUES (${newScan.id}, '${newScan.type}', '${newScan.value}')"
     );
-    return res;
   }
 
   newScan(Scan newScan) async {
