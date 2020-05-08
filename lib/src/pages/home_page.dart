@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:qrreader/src/bloc/scans_bloc.dart';
+import 'package:qrreader/src/models/scan_model.dart';
 import 'package:qrreader/src/pages/adresses_page.dart';
 import 'package:qrreader/src/pages/maps_page.dart';
 import 'package:barcode_scan/barcode_scan.dart';
-import 'package:qrreader/src/providers/db_provider.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -12,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  final scansBloc = ScansBloc();
   int currentIndex = 0;
 
   @override
@@ -23,7 +25,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.delete_forever),
-            onPressed: () {},
+            onPressed: scansBloc.deleteAllScans,
           ),
           
         ],
@@ -86,7 +88,7 @@ class _HomePageState extends State<HomePage> {
 
     if (result != null) {
       final scan = Scan(value: result);
-      DBProvider.db.newScan(scan);
+      scansBloc.addScan(scan);
     }
   }
 }
