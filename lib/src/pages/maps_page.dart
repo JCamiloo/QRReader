@@ -29,7 +29,7 @@ class MapsPage extends StatelessWidget {
               title: Text(snapshot.data[i].value),
               subtitle: Text('id: ${snapshot.data[i].id}'),
               trailing: Icon(Icons.arrow_forward, color: Colors.grey),
-              onTap: () => utils.openScan(snapshot.data[i]),
+              onTap: () => utils.openScan(context, snapshot.data[i]),
             ),
           )
         );

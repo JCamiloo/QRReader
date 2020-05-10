@@ -71,12 +71,12 @@ class _HomePageState extends State<HomePage> {
   Widget _createFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       child: Icon(Icons.filter_center_focus),
-      onPressed: _scanQR,
+      onPressed: () => _scanQR(context),
       backgroundColor: Theme.of(context).primaryColor
     );
   }
 
-  _scanQR() async {
+  _scanQR(BuildContext context) async {
     // https://pub.dev/packages/barcode_scan/versions
     // geo:40.62737197776518,-73.92354383906253
     String result = 'https://pub.dev/packages/barcode_scan/versions';
@@ -96,9 +96,9 @@ class _HomePageState extends State<HomePage> {
       scansBloc.addScan(scan2);
 
       if (Platform.isIOS) {
-        Future.delayed(Duration(milliseconds: 750), () => utils.openScan(scan));
+        Future.delayed(Duration(milliseconds: 750), () => utils.openScan(context, scan));
       } else {
-        utils.openScan(scan);
+        utils.openScan(context, scan);
       }
     }
   }
