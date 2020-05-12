@@ -2,9 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:qrreader/src/models/scan_model.dart';
 
-class MapPage extends StatelessWidget {
+class MapPage extends StatefulWidget {
+  @override
+  _MapPageState createState() => _MapPageState();
+}
+
+class _MapPageState extends State<MapPage> {
 
   final mapCtrl = MapController();
+  String mapType = 'streets';
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +32,7 @@ class MapPage extends StatelessWidget {
       body: Center(
         child: _createFlutterMap(scan),
       ),
+      floatingActionButton: _createFloatingActionButton(context),
     );
   }
 
@@ -43,14 +50,13 @@ class MapPage extends StatelessWidget {
     );
   }
 
-  // streets, dark, light, outdoors, satellite
   _createMap() {
     return TileLayerOptions(
       urlTemplate: 'https://api.mapbox.com/v4/'
       '{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}',
       additionalOptions: {
         'accessToken': 'pk.eyJ1IjoiamNhbWlsb28iLCJhIjoiY2s2NDZiaDdxMGM3aTNqbXBtMnk3ZmQ5biJ9.bLy1nepm5WTdN8sqWiNd0w',
-        'id': 'mapbox.streets'
+        'id': 'mapbox.$mapType'
       }
     );
   }
@@ -71,6 +77,30 @@ class MapPage extends StatelessWidget {
           )
         )
       ]
+    );
+  }
+
+  Widget _createFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(Icons.repeat),
+      backgroundColor: Theme.of(context).primaryColor,
+      onPressed: () {
+        switch (mapType) {
+          case 'streets': { mapType = 'dark'; }
+          break;
+          case 'dark': { mapType = 'light'; }
+          break;
+          case 'light': { mapType = 'outdoors'; }
+          break;
+          case 'outdoors': { mapType = 'satellite'; }
+          break;
+          case 'satellite': { mapType = 'streets'; }
+          break;
+          default: { mapType = 'streets'; }
+          break;
+        }
+        setState(() {});
+      },
     );
   }
 }
