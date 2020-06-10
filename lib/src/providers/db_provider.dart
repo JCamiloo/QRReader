@@ -78,6 +78,11 @@ class DBProvider {
     final db = await database;
     return await db.delete('Scans', where: 'id = ?', whereArgs: [id]);
   }
+
+  Future<int> deleteScansByType(String type) async {
+    final db = await database;
+    return await db.delete('Scans', where: 'type = ?', whereArgs: [type]);
+  }
   
   Future<int> deleteAll() async {
     final db = await database;

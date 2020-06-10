@@ -34,6 +34,11 @@ class ScansBloc  with Validators {
     getScans();
   }
 
+  deleteScansByType(String type) async {
+    await DBProvider.db.deleteScansByType(type);
+    getScans();
+  }
+
   deleteAllScans() async {
     await DBProvider.db.deleteAll();
     getScans();

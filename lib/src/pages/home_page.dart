@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.delete_forever),
-            onPressed: scansBloc.deleteAllScans,
+            onPressed: _deleteScansByType,
           ),
           
         ],
@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
 
   _scanQR(BuildContext context) async {
     String result;
-    
+
     try {
       result = await BarcodeScanner.scan();
     } catch(e) {
@@ -94,6 +94,13 @@ class _HomePageState extends State<HomePage> {
       } else {
         utils.openScan(context, scan);
       }
+    }
+  }
+
+  _deleteScansByType() async {
+    switch (currentIndex) {
+      case 0: return scansBloc.deleteScansByType('geo');
+      case 1: return scansBloc.deleteScansByType('http');
     }
   }
 }
