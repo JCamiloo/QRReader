@@ -94,8 +94,6 @@ class _MapPageState extends State<MapPage> {
           break;
           case 'outdoors': { mapType = 'satellite'; }
           break;
-          case 'satellite': { mapType = 'streets'; }
-          break;
           default: { mapType = 'streets'; }
           break;
         }
