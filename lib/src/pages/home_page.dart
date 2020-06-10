@@ -77,23 +77,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR(BuildContext context) async {
-    // https://pub.dev/packages/barcode_scan/versions
-    // geo:40.62737197776518,-73.92354383906253
-    String result = 'https://pub.dev/packages/barcode_scan/versions';
-    String result2 = 'geo:40.62737197776518,-73.92354383906253';
-    // try {
-    //   result = await BarcodeScanner.scan();
-    //   print(result);
-    // } catch(e) {
-    //   result = e.toString();
-    //   print(result);
-    // }
+    String result;
+    
+    try {
+      result = await BarcodeScanner.scan();
+    } catch(e) {
+      result = e.toString();
+    }
 
     if (result != null) {
       final scan = Scan(value: result);
-      final scan2 = Scan(value: result2);
       scansBloc.addScan(scan);
-      scansBloc.addScan(scan2);
 
       if (Platform.isIOS) {
         Future.delayed(Duration(milliseconds: 750), () => utils.openScan(context, scan));
